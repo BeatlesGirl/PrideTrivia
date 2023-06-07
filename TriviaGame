@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .question {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      .choices {
+        margin-bottom: 20px;
+      }
+      .choice {
+        margin-right: 10px;
+      }
+      .result {
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .score {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>LGBTQ+ Pride Month Trivia Game</h1>
+    <div class="question"></div>
+    <div class="choices"></div>
+    <div class="result"></div>
+    <div class="score"></div>
+
+    <script>
+      const questions = [
+        {
+          question: "Which city hosted the first LGBTQ+ Pride parade?",
+          choices: ["New York City", "San Francisco", "Berlin", "London"],
+          correctAnswer: 0,
+        },
+        {
+          question: "What year was the rainbow flag first used as a symbol of LGBTQ+ pride?",
+          choices: ["1978", "1989", "1995", "2001"],
+          correctAnswer: 0,
+        },
+        {
+          question: "Who is credited with popularizing the term 'LGBT'?",
+          choices: ["Harvey Milk", "Marsha P. Johnson", "Cleve Jones", "Gilbert Baker"],
+          correctAnswer: 2,
+        },
+      ];
+
+      let currentQuestionIndex = 0;
+      let score = 0;
+
+      function displayQuestion() {
+        const questionContainer = document.querySelector(".question");
+        const choicesContainer = document.querySelector(".choices");
+        const resultContainer = document.querySelector(".result");
+        const scoreContainer = document.querySelector(".score");
+
+        // Clear previous question and choices
+        questionContainer.innerHTML = "";
+        choicesContainer.innerHTML = "";
+
+        // Display current question
+        questionContainer.innerHTML = questions[currentQuestionIndex].question;
+
+        // Display answer choices
+        questions[currentQuestionIndex].choices.forEach((choice, index) => {
+          const choiceElement = document.createElement("div");
+          choiceElement.className = "choice";
+          choiceElement.textContent = choice;
+          choiceElement.addEventListener("click", () => checkAnswer(index));
+          choicesContainer.appendChild(choiceElement);
+        });
+
+        // Display current score
+        scoreContainer.textContent = `Score: ${score}`;
+
+        // Clear result message
+        resultContainer.textContent = "";
+      }
+
+      function checkAnswer(selectedIndex) {
+        const resultContainer = document.querySelector(".result");
+
+        // Check if the selected answer is correct
+        if (selectedIndex === questions[currentQuestionIndex].correctAnswer) {
+          resultContainer.textContent = "Correct!";
+          score++;
+        } else {
+          resultContainer.textContent = "Incorrect!";
+        }
+
+        // Move to the next question or end the game
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+          setTimeout(displayQuestion, 1000);
+        } else {
+          resultContainer.textContent = `Game Over! Final Score: ${score}/${questions.length}`;
+        }
+      }
+
+      // Start the game
+      displayQuestion();
+    </script>
+  </body>
+</html>
